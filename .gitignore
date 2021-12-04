@@ -5,3 +5,7 @@
 
 # Intellij Project Files
 /.idea/
+
+/bin/
+.project
+.classpath
