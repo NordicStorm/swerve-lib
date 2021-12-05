@@ -9,3 +9,5 @@
 /bin/
 .project
 .classpath
+*.class
+*.prefs

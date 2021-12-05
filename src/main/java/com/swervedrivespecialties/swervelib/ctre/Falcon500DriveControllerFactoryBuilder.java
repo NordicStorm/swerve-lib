@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
 import com.ctre.phoenix.motorcontrol.TalonFXInvertType;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.ctre.phoenix.motorcontrol.can.TalonFXConfiguration;
+import com.revrobotics.CANSparkMax;
 import com.swervedrivespecialties.swervelib.DriveController;
 import com.swervedrivespecialties.swervelib.DriveControllerFactory;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
@@ -46,8 +47,11 @@ public final class Falcon500DriveControllerFactoryBuilder {
         public ControllerImplementation create(Integer driveConfiguration, ModuleConfiguration moduleConfiguration) {
             TalonFXConfiguration motorConfiguration = new TalonFXConfiguration();
 
-            double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction() / TICKS_PER_ROTATION;
-            double sensorVelocityCoefficient = sensorPositionCoefficient * 10.0;
+            double sensorPositionCoefficient = Math.PI * moduleConfiguration.getWheelDiameter()
+                    * moduleConfiguration.getDriveReduction() / TICKS_PER_ROTATION;
+            double sensorVelocityCoefficient = sensorPositionCoefficient * 10.0; // reported velocity is per 100ms, so
+                                                                                 // to return the value in seconds need
+                                                                                 // to multiply by 10.
 
             if (hasVoltageCompensation()) {
                 motorConfiguration.voltageCompSaturation = nominalVoltage;
@@ -68,18 +72,13 @@ public final class Falcon500DriveControllerFactoryBuilder {
 
             motor.setNeutralMode(NeutralMode.Brake);
 
-            motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise : TalonFXInvertType.CounterClockwise);
+            motor.setInverted(moduleConfiguration.isDriveInverted() ? TalonFXInvertType.Clockwise
+                    : TalonFXInvertType.CounterClockwise);
             motor.setSensorPhase(true);
 
             // Reduce CAN status frame rates
-            CtreUtils.checkCtreError(
-                    motor.setStatusFramePeriod(
-                            StatusFrameEnhanced.Status_1_General,
-                            STATUS_FRAME_GENERAL_PERIOD_MS,
-                            CAN_TIMEOUT_MS
-                    ),
-                    "Failed to configure Falcon status frame period"
-            );
+            CtreUtils.checkCtreError(motor.setStatusFramePeriod(StatusFrameEnhanced.Status_1_General,
+                    STATUS_FRAME_GENERAL_PERIOD_MS, CAN_TIMEOUT_MS), "Failed to configure Falcon status frame period");
 
             return new ControllerImplementation(motor, sensorVelocityCoefficient);
         }
@@ -88,7 +87,9 @@ public final class Falcon500DriveControllerFactoryBuilder {
     private class ControllerImplementation implements DriveController {
         private final TalonFX motor;
         private final double sensorVelocityCoefficient;
-        private final double nominalVoltage = hasVoltageCompensation() ? Falcon500DriveControllerFactoryBuilder.this.nominalVoltage : 12.0;
+        private final double nominalVoltage = hasVoltageCompensation()
+                ? Falcon500DriveControllerFactoryBuilder.this.nominalVoltage
+                : 12.0;
 
         private ControllerImplementation(TalonFX motor, double sensorVelocityCoefficient) {
             this.motor = motor;
@@ -101,8 +102,23 @@ public final class Falcon500DriveControllerFactoryBuilder {
         }
 
         @Override
+        public void setReferenceVelocity(double velocity) {
+            motor.set(TalonFXControlMode.Velocity, velocity/sensorVelocityCoefficient);
+        }
+
+        @Override
         public double getStateVelocity() {
             return motor.getSelectedSensorVelocity() * sensorVelocityCoefficient;
+        }
+
+        @Override
+        public TalonFX getTalonFX() {
+            return motor;
+        }
+
+        @Override
+        public CANSparkMax getSparkMax() {
+            throw new UnsupportedOperationException("not a spark drive controller");
         }
     }
 }
