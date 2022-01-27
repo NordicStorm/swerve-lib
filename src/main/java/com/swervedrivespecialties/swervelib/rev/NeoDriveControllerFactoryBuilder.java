@@ -1,10 +1,9 @@
 package com.swervedrivespecialties.swervelib.rev;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
-import com.revrobotics.CANEncoder;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import com.revrobotics.RelativeEncoder;
 import com.swervedrivespecialties.swervelib.DriveController;
 import com.swervedrivespecialties.swervelib.DriveControllerFactory;
 import com.swervedrivespecialties.swervelib.ModuleConfiguration;
@@ -63,9 +62,8 @@ public final class NeoDriveControllerFactoryBuilder {
             motor.setIdleMode(CANSparkMax.IdleMode.kBrake);
 
             // Setup encoder
-            CANEncoder encoder = motor.getEncoder();
-            double positionConversionFactor = Math.PI * moduleConfiguration.getWheelDiameter()
-                    * moduleConfiguration.getDriveReduction();
+            RelativeEncoder encoder = motor.getEncoder();
+            double positionConversionFactor = Math.PI * moduleConfiguration.getWheelDiameter() * moduleConfiguration.getDriveReduction();
             encoder.setPositionConversionFactor(positionConversionFactor);
             encoder.setVelocityConversionFactor(positionConversionFactor / 60.0);
 
@@ -75,9 +73,9 @@ public final class NeoDriveControllerFactoryBuilder {
 
     private static class ControllerImplementation implements DriveController {
         private final CANSparkMax motor;
-        private final CANEncoder encoder;
+        private final RelativeEncoder encoder;
 
-        private ControllerImplementation(CANSparkMax motor, CANEncoder encoder) {
+        private ControllerImplementation(CANSparkMax motor, RelativeEncoder encoder) {
             this.motor = motor;
             this.encoder = encoder;
         }
