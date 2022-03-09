@@ -8,7 +8,9 @@ public interface DriveControllerFactory<Controller extends DriveController, Driv
             ShuffleboardContainer container,
             Controller controller
     ) {
-        container.addNumber("Current Velocity", controller::getStateVelocity);
+        if(container!=null){
+            container.addNumber("Current Velocity", controller::getStateVelocity);
+        }
     }
 
     default Controller create(
