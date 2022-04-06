@@ -9,7 +9,9 @@ public final class CtreUtils {
 
     public static void checkCtreError(ErrorCode errorCode, String message) {
         if (errorCode != ErrorCode.OK) {
-            DriverStation.reportError(String.format("%s: %s", message, errorCode.toString()), false);
+            throw new RuntimeException(String.format("%s: %s", message, errorCode.toString()));
+
+            //DriverStation.reportError(String.format("%s: %s", message, errorCode.toString()), false);
         }
     }
 }

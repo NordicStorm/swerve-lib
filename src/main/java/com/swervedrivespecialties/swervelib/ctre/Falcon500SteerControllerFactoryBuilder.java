@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
 import static com.swervedrivespecialties.swervelib.ctre.CtreUtils.checkCtreError;
 
 public final class Falcon500SteerControllerFactoryBuilder {
-    private static final int CAN_TIMEOUT_MS = 250;
+    private static final int CAN_TIMEOUT_MS = 1000; // was 250
     private static final int STATUS_FRAME_GENERAL_PERIOD_MS = 250;
 
     private static final double TICKS_PER_ROTATION = 2048.0;
@@ -123,7 +123,7 @@ public final class Falcon500SteerControllerFactoryBuilder {
             if (hasVoltageCompensation()) {
                 motor.enableVoltageCompensation(true);
             }
-            checkCtreError(motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 feedback sensor");
+            //checkCtreError(motor.configAllowableClosedloopError(0, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 allowed error");            checkCtreError(motor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, CAN_TIMEOUT_MS), "Failed to set Falcon 500 feedback sensor");
             motor.setSensorPhase(true);
             motor.setInverted(moduleConfiguration.isSteerInverted() ? TalonFXInvertType.CounterClockwise : TalonFXInvertType.Clockwise);
             motor.setNeutralMode(NeutralMode.Brake);
@@ -196,7 +196,7 @@ public final class Falcon500SteerControllerFactoryBuilder {
             } else {
                 resetIteration = 0;
             }
-
+            //System.out.println("VELO "+motor.getSelectedSensorVelocity() * motorEncoderVelocityCoefficient);
             double currentAngleRadiansMod = currentAngleRadians % (2.0 * Math.PI);
             if (currentAngleRadiansMod < 0.0) {
                 currentAngleRadiansMod += 2.0 * Math.PI;
