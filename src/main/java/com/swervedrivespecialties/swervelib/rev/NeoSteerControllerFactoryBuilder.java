@@ -65,7 +65,7 @@ public final class NeoSteerControllerFactoryBuilder {
 
         @Override
         public ControllerImplementation create(NeoSteerConfiguration<T> steerConfiguration, ModuleConfiguration moduleConfiguration) {
-            AbsoluteEncoder absoluteEncoder = encoderFactory.create(steerConfiguration.getEncoderConfiguration());
+            com.swervedrivespecialties.swervelib.AbsoluteEncoder absoluteEncoder = encoderFactory.create(steerConfiguration.getEncoderConfiguration());
 
             CANSparkMax motor = new CANSparkMax(steerConfiguration.getMotorPort(), CANSparkMaxLowLevel.MotorType.kBrushless);
             checkNeoError(motor.setPeriodicFramePeriod(CANSparkMaxLowLevel.PeriodicFrame.kStatus0, 100), "Failed to set periodic status frame 0 rate");
@@ -105,13 +105,13 @@ public final class NeoSteerControllerFactoryBuilder {
         private final CANSparkMax motor;
         private final SparkMaxPIDController controller;
         private final RelativeEncoder motorEncoder;
-        private final AbsoluteEncoder absoluteEncoder;
+        private final  com.swervedrivespecialties.swervelib.AbsoluteEncoder absoluteEncoder;
 
         private double referenceAngleRadians = 0;
 
         private double resetIteration = 0;
 
-        public ControllerImplementation(CANSparkMax motor, AbsoluteEncoder absoluteEncoder) {
+        public ControllerImplementation(CANSparkMax motor,  com.swervedrivespecialties.swervelib.AbsoluteEncoder absoluteEncoder) {
             this.motor = motor;
             this.controller = motor.getPIDController();
             this.motorEncoder = motor.getEncoder();
