@@ -90,6 +90,11 @@ public final class NeoDriveControllerFactoryBuilder {
             // TODO
             throw new UnsupportedOperationException("not implemented yet");
         }
+        @Override
+        public double getSensorPosition() {
+            // TODO
+            throw new UnsupportedOperationException("not implemented yet");
+        }
 
         @Override
         public double getStateVelocity() {

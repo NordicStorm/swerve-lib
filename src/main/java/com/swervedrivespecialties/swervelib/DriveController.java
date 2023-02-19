@@ -10,7 +10,10 @@ public interface DriveController {
     
     double getStateVelocity();
 
+    double getSensorPosition();
+
     TalonFX getTalonFX();
 
     CANSparkMax getSparkMax();
+
 }
