@@ -1,10 +1,13 @@
 plugins {
     id 'java-library'
     id 'maven-publish'
+    id "edu.wpi.first.GradleRIO" version "2024.1.1"
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
 
 allprojects {
     group 'com.swervedrivespecialties'
@@ -24,15 +27,12 @@ allprojects {
 }
 
 dependencies {
-    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2024.2.1'
-
+    implementation wpi.java.deps.wpilib()
+    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2024.1.1'
     implementation 'com.ctre.phoenix6:wpiapi-java:24.1.0'
 
     // REV is implementation because it is not a hard requirement
     implementation 'com.revrobotics.frc:REVLib-java:2023.1.3'
-
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.2'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 publishing {
@@ -41,8 +41,4 @@ publishing {
             from components.java
         }
     }
-}
-
-test {
-    useJUnitPlatform()
 }
