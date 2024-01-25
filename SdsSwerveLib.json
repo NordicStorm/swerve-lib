@@ -10,7 +10,7 @@
   "jsonUrl": "https://raw.githubusercontent.com/NordicStorm/swerve-lib/develop/SdsSwerveLib.json",
   "javaDependencies": [
     {
-      "groupId": "com.github.SwerveDriveSpecialties",
+      "groupId": "com.github.NordicStorm",
       "artifactId": "swerve-lib",
       "version": "1.1.1"
     }
