@@ -1,6 +1,6 @@
 package com.swervedrivespecialties.swervelib;
 
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix6.hardware.TalonFX;
 import com.revrobotics.CANSparkMax;
 
 

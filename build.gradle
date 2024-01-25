@@ -24,7 +24,7 @@ allprojects {
 }
 
 dependencies {
-    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2023.2.1'
+    implementation 'edu.wpi.first.wpilibj:wpilibj-java:2024.2.1'
 
     implementation 'com.ctre.phoenix6:wpiapi-java:24.1.0'
 
