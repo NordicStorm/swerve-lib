@@ -18,7 +18,7 @@ public final class Mk3SwerveModuleHelper {
 
     private static SteerControllerFactory<?, Falcon500SteerConfiguration<CanCoderAbsoluteConfiguration>> getFalcon500SteerFactory(Mk3ModuleConfiguration configuration) {
         return new Falcon500SteerControllerFactoryBuilder()
-                .withPidConstants(0.2, 0.0, 0.1)
+                .withPidConstants(4.804692082111438, 0.0, 0.002402346041055719)
                 .withCurrentLimit(configuration.getSteerCurrentLimit())
                 .build(new CanCoderFactoryBuilder()
                         .withReadingUpdatePeriod(100)
