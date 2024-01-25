@@ -46,10 +46,10 @@ public final class Falcon500DriveControllerFactoryBuilder {
                     : InvertedValue.CounterClockwise_Positive;
 
             TalonFX motor = new TalonFX(driveConfiguration);
-            CtreUtils.checkCtreError(motor.getVelocity().setUpdateFrequency(50), "Failed to configure Falcon 500 status frame");
-            CtreUtils.checkCtreError(motor.getPosition().setUpdateFrequency(50), "Failed to configure Falcon 500 status frame");
-            CtreUtils.checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame");
-            CtreUtils.checkCtreError(motor.getConfigurator().apply(motorConfiguration), "Failed to configure Falcon 500");
+            CtreUtils.checkCtreError(motor.getVelocity().setUpdateFrequency(50), "Failed to configure Falcon 500 velocity frame. id="+driveConfiguration);
+            CtreUtils.checkCtreError(motor.getPosition().setUpdateFrequency(50), "Failed to configure Falcon 500 position frame. id="+driveConfiguration);
+            CtreUtils.checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame. id="+driveConfiguration);
+            CtreUtils.checkCtreError(motor.getConfigurator().apply(motorConfiguration), "Failed to configure Falcon 500. id="+driveConfiguration);
 
             return new ControllerImplementation(motor, sensorVelocityCoefficient, sensorPositionCoefficient);
         }

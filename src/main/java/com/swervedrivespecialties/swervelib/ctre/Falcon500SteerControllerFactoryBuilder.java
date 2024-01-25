@@ -88,17 +88,17 @@ public final class Falcon500SteerControllerFactoryBuilder {
                 motorConfiguration.CurrentLimits.SupplyCurrentLimit = currentLimit;
                 motorConfiguration.CurrentLimits.SupplyCurrentLimitEnable = true;
             }
-
-            TalonFX motor = new TalonFX(steerConfiguration.getMotorPort());
+            int port = steerConfiguration.getMotorPort();
+            TalonFX motor = new TalonFX(port);
             motorConfiguration.MotorOutput.NeutralMode = NeutralModeValue.Brake;
             motorConfiguration.MotorOutput.Inverted = moduleConfiguration.isSteerInverted() ? InvertedValue.Clockwise_Positive
                     : InvertedValue.CounterClockwise_Positive;
 
-            checkCtreError(motor.getVelocity().setUpdateFrequency(50), "Failed to configure Falcon 500 status frame");
-            checkCtreError(motor.getPosition().setUpdateFrequency(50), "Failed to configure Falcon 500 status frame");
-            checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame");
-            checkCtreError(motor.getConfigurator().apply(motorConfiguration, 1), "Failed to configure Falcon 500 settings");
-            checkCtreError(motor.setPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient), "Failed to set Falcon 500 encoder position");
+            checkCtreError(motor.getVelocity().setUpdateFrequency(50), "Failed to configure Falcon 500 velocity frame. id="+port);
+            checkCtreError(motor.getPosition().setUpdateFrequency(50), "Failed to configure Falcon 500 position frame. id="+port);
+            checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame. id="+port);
+            checkCtreError(motor.getConfigurator().apply(motorConfiguration, 1), "Failed to configure Falcon 500 settings. id="+port);
+            checkCtreError(motor.setPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient), "Failed to set Falcon 500 encoder position. id="+port);
 
             return new ControllerImplementation(motor,
                     sensorPositionCoefficient,

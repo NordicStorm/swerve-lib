@@ -29,11 +29,11 @@ public class CanCoderFactoryBuilder {
             config.MagnetSensor.SensorDirection = direction == Direction.CLOCKWISE ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
             
             CANcoder encoder = new CANcoder(configuration.getId());
-            CtreUtils.checkCtreError(encoder.getConfigurator().apply(config, 0.250), "Failed to configure CANCoder");
-            CtreUtils.checkCtreError(encoder.getAbsolutePosition().setUpdateFrequency(1000.0 / periodMilliseconds, 0.250), "Failed to configure CANCoder update rate");
+            CtreUtils.checkCtreError(encoder.getConfigurator().apply(config, 0.250), "Failed to configure CANCoder. id="+configuration.getId());
+            CtreUtils.checkCtreError(encoder.getAbsolutePosition().setUpdateFrequency(1000.0 / periodMilliseconds, 0.250), "Failed to configure CANCoder update rate. id="+configuration.getId());
             
             // delay to make sure the encoder is fully initialized
-            CtreUtils.checkCtreError(encoder.getAbsolutePosition().waitForUpdate(5).getStatus(), "Failed to get absolute encoder position");
+            CtreUtils.checkCtreError(encoder.getAbsolutePosition().waitForUpdate(5).getStatus(), "Failed to get absolute CANCoder position. id="+configuration.getId());
             return new EncoderImplementation(encoder);
         };
     }
