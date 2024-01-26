@@ -119,6 +119,7 @@ public final class Falcon500SteerControllerFactoryBuilder {
             this.motor = motor;
             this.motorEncoderPositionCoefficient = motorEncoderPositionCoefficient;
             this.absoluteEncoder = absoluteEncoder;
+            positionRequest.Slot = 0;
         }
 
         @Override

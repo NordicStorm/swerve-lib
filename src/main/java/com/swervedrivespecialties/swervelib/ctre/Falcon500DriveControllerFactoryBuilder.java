@@ -66,6 +66,7 @@ public final class Falcon500DriveControllerFactoryBuilder {
             this.motor = motor;
             this.sensorVelocityCoefficient = sensorVelocityCoefficient;
             this.sensorPositionCoefficient = sensorPositionCoefficient;
+            velocityRequest.Slot = 0;
         }
 
         @Override
