@@ -25,7 +25,7 @@ public class CanCoderFactoryBuilder {
         return configuration -> {
             CANcoderConfiguration config = new CANcoderConfiguration();
             config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
-            config.MagnetSensor.MagnetOffset = configuration.getOffset() / 2*Math.PI; // convert rads to rotations
+            config.MagnetSensor.MagnetOffset = configuration.getOffset() /( 2*Math.PI); // convert rads to rotations
             config.MagnetSensor.SensorDirection = direction == Direction.CLOCKWISE ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
             
             CANcoder encoder = new CANcoder(configuration.getId());
