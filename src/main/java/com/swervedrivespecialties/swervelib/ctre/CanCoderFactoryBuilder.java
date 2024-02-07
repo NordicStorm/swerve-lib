@@ -26,7 +26,7 @@ public class CanCoderFactoryBuilder {
             CANcoderConfiguration config = new CANcoderConfiguration();
             config.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Unsigned_0To1;
             config.MagnetSensor.MagnetOffset = configuration.getOffset() /( 2*Math.PI); // convert rads to rotations
-            config.MagnetSensor.SensorDirection = direction == Direction.CLOCKWISE ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
+            config.MagnetSensor.SensorDirection = direction != Direction.CLOCKWISE ? SensorDirectionValue.Clockwise_Positive : SensorDirectionValue.CounterClockwise_Positive;
             
             CANcoder encoder = new CANcoder(configuration.getId());
             CtreUtils.checkCtreError(encoder.getConfigurator().apply(config, 0.250), "Failed to configure CANCoder. id="+configuration.getId());
@@ -47,6 +47,7 @@ public class CanCoderFactoryBuilder {
 
         @Override
         public double getAbsoluteAngle() {
+            // System.out.println("Absolute anlge EE" + encoder.getAbsolutePosition().getValue());
             double angle = 2 * Math.PI * encoder.getAbsolutePosition().getValue();
             angle %= 2.0 * Math.PI;
             if (angle < 0.0) {

@@ -96,7 +96,7 @@ public final class Falcon500SteerControllerFactoryBuilder {
 
             checkCtreError(motor.getVelocity().setUpdateFrequency(50), "Failed to configure Falcon 500 velocity frame. id="+port);
             checkCtreError(motor.getPosition().setUpdateFrequency(50), "Failed to configure Falcon 500 position frame. id="+port);
-            checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame. id="+port);
+        //    checkCtreError(motor.optimizeBusUtilization(), "Failed to optimize Falcon 500 status frame. id="+port);
             checkCtreError(motor.getConfigurator().apply(motorConfiguration, 1), "Failed to configure Falcon 500 settings. id="+port);
             checkCtreError(motor.setPosition(absoluteEncoder.getAbsoluteAngle() / sensorPositionCoefficient), "Failed to set Falcon 500 encoder position. id="+port);
 
