@@ -10,7 +10,7 @@ public final class CtreUtils {
         if (errorCode.isError()) {
             throw new RuntimeException(String.format("%s: %s", message, errorCode.toString()));
 
-            ///DriverStation.reportError(String.format("%s: %s", message, errorCode.toString()), false);
+            //DriverStation.reportError(String.format("%s: %s", message, errorCode.toString()), false);
         }
     }
 }
